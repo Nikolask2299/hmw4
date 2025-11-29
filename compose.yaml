@@ -14,13 +14,13 @@ services:
       - 'POSTGRES_DB=postgres'
       - 'POSTGRES_PASSWORD=q1w2e3r4t5y6u7i8o9p0'
       - 'POSTGRES_USER=postgres'
-      - 'PGPORT=5432'
+      - 'PGPORT=5435'
 
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
     ports:
-      - '5432:5432'
+      - '5435:5435'
     
     networks:
       - interal

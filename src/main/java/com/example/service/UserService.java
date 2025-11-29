@@ -11,13 +11,15 @@ import com.example.exception.UserNotFoundException;
 import com.example.repository.UserRepository;
 
 @Service
-public class UserService {
+public class UserService implements UserServiceInterface {
+
     private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
+    @Override
     public UserDto createUser(CreateUserRequest request){
         if (userRepository.findByEmail(request.email()).isPresent()) {
             throw new RuntimeException("User with " + request.email() + " already exists");
@@ -28,6 +30,7 @@ public class UserService {
         return new UserDto(savedUser);
     }
     
+    @Override
     public UserDto getUser(Long id){
         User user = userRepository.findById(id).orElseThrow(
             () -> new UserNotFoundException("User with id " + id + " not found")
@@ -35,10 +38,12 @@ public class UserService {
         return new UserDto(user);
     }
 
+    @Override
     public List<UserDto> getAllUsers(){
         return userRepository.findAll().stream().map(UserDto::new).toList();
     }
 
+    @Override
     public void deleteUser(Long id){
         if (userRepository.existsById(id)){
             userRepository.deleteById(id);
@@ -47,6 +52,7 @@ public class UserService {
         }
     }
 
+    @Override
     public UserDto updateUser(Long id, CreateUserRequest request){
         User user = userRepository.findById(id).orElseThrow(
             () -> new UserNotFoundException("User with id " + id + " not found")
