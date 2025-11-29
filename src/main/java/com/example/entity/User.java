@@ -66,4 +66,8 @@ public class User {
                 ", created_at=" + createdAt +
                 '}';
     }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }
